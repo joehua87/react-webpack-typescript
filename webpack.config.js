@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -30,11 +31,9 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
+              presets: ['@babel/typescript', '@emotion/babel-preset-css-prop'],
               plugins: ['react-hot-loader/babel'],
             },
-          },
-          {
-            loader: 'ts-loader',
           },
         ],
       },
@@ -52,6 +51,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new ForkTsCheckerWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',

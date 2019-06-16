@@ -1,4 +1,7 @@
-import * as React from 'react'
+import React from 'react'
+import { useState } from 'react'
+
+import { card } from '../styles'
 
 export interface HelloProps {
   compiler?: string
@@ -6,10 +9,10 @@ export interface HelloProps {
 }
 
 export const Hello = (props: HelloProps) => {
-  const [counter, setCounter] = React.useState(0)
+  const [counter, setCounter] = useState(0)
   return (
     <h1>
-      <div>
+      <div css={card}>
         Hello from {props.compiler} and {props.framework}
       </div>
       <div>
