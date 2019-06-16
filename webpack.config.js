@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+const path = require('path')
+const WebpackDashboard = require('webpack-dashboard/plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 
@@ -7,17 +9,19 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: 'bundle.js',
+    publicPath: '/',
     path: __dirname + '/dist',
   },
 
   // Enable sourcemaps for debugging webpack's output.
-  devtool: 'source-map',
+  devtool: 'eval',
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
       'react-dom': '@hot-loader/react-dom',
+      '~': path.resolve(__dirname, 'src'),
     },
   },
 
@@ -48,13 +52,35 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
+    new WebpackDashboard(),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
     }),
   ],
+  devServer: {
+    hot: true,
+    historyApiFallback: true,
+    port: 9000,
+  },
 }
