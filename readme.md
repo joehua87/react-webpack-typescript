@@ -2,9 +2,9 @@
 
 WIP
 
-[x] eslint typescript
-[x] hot loader
-[ ] ...
+- [x] eslint typescript
+- [x] hot loader
+- [ ] ...
 
 ## Getting started
 
